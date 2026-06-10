@@ -1,0 +1,95 @@
+{
+  "_note": "SYNTHETIC DATA — All names and details are entirely fictional. For demonstration only.",
+  "cases": [
+    {
+      "case_id": "CASE-2024-001",
+      "deceased": {
+        "name": "Rajan Kumar",
+        "age": 62,
+        "date_of_death": "2024-03-15",
+        "state": "Andhra Pradesh",
+        "city": "Vijayawada",
+        "employment_type": "government_retired",
+        "employer": "Indian Railways"
+      },
+      "assets": {
+        "property": true,
+        "bank_accounts": 2,
+        "insurance_policies": 1,
+        "epf": true,
+        "pension": true,
+        "will_exists": false
+      },
+      "family": {
+        "spouse": true,
+        "children_count": 2,
+        "minor_children": 0,
+        "dependants": ["spouse"]
+      },
+      "complexity_score": "MEDIUM",
+      "estimated_tasks": 7,
+      "estimated_completion_days": 90
+    },
+    {
+      "case_id": "CASE-2024-002",
+      "deceased": {
+        "name": "Priya Venkatesh",
+        "age": 38,
+        "date_of_death": "2024-06-22",
+        "state": "Tamil Nadu",
+        "city": "Chennai",
+        "employment_type": "private_sector",
+        "employer": "TechCorp Ltd (Synthetic)"
+      },
+      "assets": {
+        "property": true,
+        "bank_accounts": 1,
+        "insurance_policies": 1,
+        "epf": true,
+        "pension": false,
+        "home_loan": true,
+        "home_loan_insurance": true,
+        "will_exists": false
+      },
+      "family": {
+        "spouse": true,
+        "children_count": 2,
+        "minor_children": 2,
+        "dependants": ["spouse", "minor_children"]
+      },
+      "complexity_score": "HIGH",
+      "estimated_tasks": 9,
+      "estimated_completion_days": 120
+    },
+    {
+      "case_id": "CASE-2024-003",
+      "deceased": {
+        "name": "Abdul Rashid",
+        "age": 55,
+        "date_of_death": "2024-11-03",
+        "state": "Maharashtra",
+        "city": "Pune",
+        "employment_type": "self_employed",
+        "religion": "Muslim"
+      },
+      "assets": {
+        "property": true,
+        "commercial_property": true,
+        "bank_accounts": 3,
+        "insurance_policies": 0,
+        "epf": false,
+        "pension": false,
+        "will_exists": false
+      },
+      "family": {
+        "spouse": true,
+        "children_count": 5,
+        "minor_children": 0,
+        "dependants": ["spouse", "youngest_daughter"]
+      },
+      "complexity_score": "HIGH",
+      "estimated_tasks": 8,
+      "estimated_completion_days": 150
+    }
+  ]
+}

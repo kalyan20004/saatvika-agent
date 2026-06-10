@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saatvika — AI Agent for Grief & Estate Navigation</title>
+  <meta name="description" content="Saatvika guides bereaved Indian families through every legal, financial and emotional step after a loss — grounded in cited knowledge, never hallucinated." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<!-- ═══════════════ HERO / LANDING ═══════════════ -->
+<section id="landing" class="screen active">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="logo-mark">🪔</div>
+    <h1 class="hero-title">Saatvika</h1>
+    <p class="hero-tagline">AI guidance for families navigating grief</p>
+    <p class="hero-desc">
+      After a loss, families face hundreds of legal and financial tasks —
+      death certificates, bank accounts, insurance, property, pension.
+      Saatvika guides you through every step with <strong>grounded, cited answers</strong>
+      from official government sources.
+    </p>
+    <div class="iq-badges">
+      <span class="iq-badge foundry">⚡ Foundry IQ</span>
+      <span class="iq-badge fabric">🧩 Fabric IQ</span>
+      <span class="iq-badge work">💼 Work IQ</span>
+    </div>
+    <button id="btn-start" class="btn-primary" onclick="showIntake()">
+      Begin — Get Your Task Plan
+    </button>
+    <p class="hero-note">
+      🔒 No real personal data is stored. All demonstrations use synthetic data only.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════ INTAKE FORM ═══════════════ -->
+<section id="intake" class="screen">
+  <div class="intake-container">
+    <div class="intake-header">
+      <div class="logo-small">🪔 Saatvika</div>
+      <h2>Tell us about your situation</h2>
+      <p>This helps us create a personalised, prioritised task plan for your family.</p>
+      <div class="disclaimer-bar">⚠️ Please use fictional / demonstration data only. Do not enter real personal information.</div>
+    </div>
+
+    <form id="intake-form" class="intake-form">
+      <div class="form-section">
+        <h3>👤 About the Deceased</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="deceased_name">Name (can be fictional)</label>
+            <input type="text" id="deceased_name" placeholder="e.g. Rajan Kumar" required />
+          </div>
+          <div class="form-group">
+            <label for="date_of_death">Date of Death</label>
+            <input type="date" id="date_of_death" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="state">State</label>
+            <select id="state" required>
+              <option value="">Select state</option>
+              <option>Andhra Pradesh</option>
+              <option>Telangana</option>
+              <option>Tamil Nadu</option>
+              <option>Karnataka</option>
+              <option>Maharashtra</option>
+              <option>West Bengal</option>
+              <option>Delhi</option>
+              <option>Uttar Pradesh</option>
+              <option>Gujarat</option>
+              <option>Rajasthan</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="city">City / District</label>
+            <input type="text" id="city" placeholder="e.g. Vijayawada" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="employment_type">Employment Type</label>
+            <select id="employment_type" required>
+              <option value="">Select type</option>
+              <option value="government">Government Employee</option>
+              <option value="government_retired">Government Retired</option>
+              <option value="private_sector">Private Sector</option>
+              <option value="self_employed">Self Employed</option>
+              <option value="not_employed">Not Employed</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="religion">Religion (affects inheritance law)</label>
+            <select id="religion">
+              <option>Hindu</option>
+              <option>Muslim</option>
+              <option>Christian</option>
+              <option>Parsi</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>🏦 Assets & Financial</h3>
+        <div class="toggle-grid">
+          <label class="toggle-item">
+            <input type="checkbox" id="has_property" />
+            <span class="toggle-box">🏠 Owns Property</span>
+          </label>
+          <label class="toggle-item">
+            <input type="checkbox" id="has_bank_accounts" checked />
+            <span class="toggle-box">🏦 Bank Accounts</span>
+          </label>
+          <label class="toggle-item">
+            <input type="checkbox" id="has_nominee_bank" />
+            <span class="toggle-box">✅ Nominee Registered</span>
+          </label>
+          <label class="toggle-item">
+            <input type="checkbox" id="has_insurance" />
+            <span class="toggle-box">📋 Life Insurance</span>
+          </label>
+          <label class="toggle-item">
+            <input type="checkbox" id="has_epf" />
+            <span class="toggle-box">💰 EPF Member</span>
+          </label>
+          <label class="toggle-item">
+            <input type="checkbox" id="has_pension" />
+            <span class="toggle-box">🎖️ Government Pension</span>
+          </label>
+          <label class="toggle-item">
+            <input type="checkbox" id="has_home_loan" />
+            <span class="toggle-box">🔑 Home Loan</span>
+          </label>
+          <label class="toggle-item">
+            <input type="checkbox" id="will_exists" />
+            <span class="toggle-box">📜 Will Exists</span>
+          </label>
+        </div>
+        <div class="form-row" style="margin-top:1rem">
+          <div class="form-group">
+            <label for="bank_account_count">Number of bank accounts</label>
+            <input type="number" id="bank_account_count" value="1" min="0" max="20" />
+          </div>
+          <div class="form-group">
+            <label for="insurance_age_months">Insurance policy age (months)</label>
+            <input type="number" id="insurance_age_months" value="60" min="0" max="600" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>👨‍👩‍👧 Family</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Spouse alive?</label>
+            <div class="radio-group">
+              <label><input type="radio" name="spouse_alive" value="true" checked /> Yes</label>
+              <label><input type="radio" name="spouse_alive" value="false" /> No</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="children_count">Number of children</label>
+            <input type="number" id="children_count" value="2" min="0" max="20" />
+          </div>
+          <div class="form-group">
+            <label for="minor_children_count">Minor children (under 18)</label>
+            <input type="number" id="minor_children_count" value="0" min="0" max="20" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" onclick="showScreen('landing')">← Back</button>
+        <button type="submit" class="btn-primary" id="btn-submit-intake">
+          Generate My Task Plan →
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ═══════════════ MAIN CHAT / DASHBOARD ═══════════════ -->
+<section id="dashboard" class="screen">
+  <div class="dash-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">🪔 Saatvika</div>
+
+      <div class="case-card" id="case-card">
+        <div class="case-label">Active Case</div>
+        <div class="case-id" id="case-id">—</div>
+        <div class="complexity-badge" id="complexity-badge">—</div>
+      </div>
+
+      <div class="iq-status">
+        <div class="iq-item">
+          <span class="iq-dot foundry"></span>
+          <span>Foundry IQ</span>
+          <span class="iq-active">Active</span>
+        </div>
+        <div class="iq-item">
+          <span class="iq-dot fabric"></span>
+          <span>Fabric IQ</span>
+          <span class="iq-active">Active</span>
+        </div>
+        <div class="iq-item">
+          <span class="iq-dot work"></span>
+          <span>Work IQ</span>
+          <span class="iq-active">Active</span>
+        </div>
+      </div>
+
+      <div class="task-summary" id="task-summary">
+        <div class="ts-title">Task Summary</div>
+        <div class="ts-row">
+          <span>Total Tasks</span>
+          <span id="total-tasks">—</span>
+        </div>
+        <div class="ts-row urgent">
+          <span>🚨 Critical</span>
+          <span id="urgent-tasks">—</span>
+        </div>
+        <div class="ts-row">
+          <span>Est. Completion</span>
+          <span id="est-days">—</span>
+        </div>
+      </div>
+
+      <div class="sidebar-actions">
+        <button class="sidebar-btn" onclick="showTasks()">📋 View All Tasks</button>
+        <button class="sidebar-btn" onclick="requestSupport()">💙 Grief Support</button>
+        <button class="sidebar-btn" onclick="showScreen('landing')">🏠 Home</button>
+      </div>
+    </aside>
+
+    <!-- Chat Area -->
+    <main class="chat-area">
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <h2>Saatvika</h2>
+          <span class="chat-status">● Guiding with Foundry IQ + Fabric IQ + Work IQ</span>
+        </div>
+        <div class="agent-indicator" id="agent-indicator">Orchestrator</div>
+      </div>
+
+      <div class="chat-messages" id="chat-messages">
+        <!-- Messages appear here -->
+      </div>
+
+      <!-- Quick action chips -->
+      <div class="quick-chips" id="quick-chips">
+        <button class="chip" onclick="sendQuick('How do I get a death certificate?')">🗂️ Death Certificate</button>
+        <button class="chip" onclick="sendQuick('How do I notify the bank?')">🏦 Bank Notification</button>
+        <button class="chip" onclick="sendQuick('How do I claim EPF?')">💰 EPF Claim</button>
+        <button class="chip" onclick="sendQuick('Show me my progress summary')">📊 My Progress</button>
+        <button class="chip" onclick="sendQuick('I need grief support resources')">💙 Support</button>
+        <button class="chip" onclick="sendQuick('How do I claim life insurance?')">📋 Insurance</button>
+      </div>
+
+      <div class="chat-input-area">
+        <textarea id="chat-input" placeholder="Ask about death certificates, bank notifications, insurance claims, property, pension, or anything else..." rows="2"></textarea>
+        <button id="btn-send" class="btn-send" onclick="sendMessage()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+    </main>
+  </div>
+</section>
+
+<!-- ═══════════════ TASK LIST MODAL ═══════════════ -->
+<div id="task-modal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>📋 Your Complete Task List</h2>
+      <button class="modal-close" onclick="closeModal('task-modal')">✕</button>
+    </div>
+    <div id="task-list-content" class="task-list"></div>
+  </div>
+</div>
+
+<!-- Loading Overlay -->
+<div id="loading" class="loading hidden">
+  <div class="loading-inner">
+    <div class="loading-flame">🪔</div>
+    <p>Saatvika is finding a cited answer…</p>
+  </div>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

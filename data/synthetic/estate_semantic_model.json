@@ -1,0 +1,119 @@
+{
+  "_note": "SYNTHETIC DATA — Fabric IQ semantic model seed. For demonstration only.",
+  "entities": {
+    "certifications": [
+      {
+        "id": "DEATH_CERT",
+        "name": "Death Certificate",
+        "authority": "Municipal Corporation / Gram Panchayat",
+        "deadline_days": 21,
+        "urgency": "CRITICAL",
+        "required_for": ["BANK_CLAIM", "INSURANCE_CLAIM", "EPF_CLAIM", "PENSION_CANCEL", "PROPERTY_MUTATION"],
+        "estimated_days_to_complete": 7
+      },
+      {
+        "id": "LEGAL_HEIR_CERT",
+        "name": "Legal Heir Certificate",
+        "authority": "Tehsildar / Revenue Department",
+        "urgency": "HIGH",
+        "required_for": ["BANK_CLAIM_NO_NOMINEE", "PROPERTY_MUTATION", "PENSION_CLAIM"],
+        "estimated_days_to_complete": 30
+      },
+      {
+        "id": "SUCCESSION_CERT",
+        "name": "Succession Certificate",
+        "authority": "District Court",
+        "urgency": "MEDIUM",
+        "required_for": ["BANK_CLAIM_LARGE", "SHARES_CLAIM"],
+        "estimated_days_to_complete": 120
+      }
+    ],
+    "task_types": [
+      {
+        "id": "DEATH_REGISTRATION",
+        "name": "Death Certificate Registration",
+        "category": "legal",
+        "urgency": "CRITICAL",
+        "week": 1,
+        "dependencies": [],
+        "applicable_to": "all"
+      },
+      {
+        "id": "BANK_NOTIFICATION",
+        "name": "Bank Account Notification",
+        "category": "financial",
+        "urgency": "HIGH",
+        "week": 1,
+        "dependencies": ["DEATH_REGISTRATION"],
+        "applicable_to": "all"
+      },
+      {
+        "id": "INSURANCE_CLAIM",
+        "name": "Life Insurance Death Claim",
+        "category": "financial",
+        "urgency": "HIGH",
+        "week": 2,
+        "dependencies": ["DEATH_REGISTRATION"],
+        "applicable_to": "has_insurance"
+      },
+      {
+        "id": "EPF_CLAIM",
+        "name": "EPF / EDLI Claim",
+        "category": "financial",
+        "urgency": "HIGH",
+        "week": 2,
+        "dependencies": ["DEATH_REGISTRATION"],
+        "applicable_to": "has_epf"
+      },
+      {
+        "id": "PENSION_CANCEL",
+        "name": "Pension Cancellation & Family Pension",
+        "category": "financial",
+        "urgency": "CRITICAL",
+        "week": 1,
+        "dependencies": ["DEATH_REGISTRATION"],
+        "applicable_to": "has_pension"
+      },
+      {
+        "id": "PROPERTY_MUTATION",
+        "name": "Property Mutation (Dakhil Kharij)",
+        "category": "property",
+        "urgency": "MEDIUM",
+        "month": 2,
+        "dependencies": ["DEATH_REGISTRATION", "LEGAL_HEIR_CERT"],
+        "applicable_to": "has_property"
+      },
+      {
+        "id": "PROBATE",
+        "name": "Probate / Succession Certificate",
+        "category": "legal",
+        "urgency": "MEDIUM",
+        "month": 1,
+        "dependencies": ["DEATH_REGISTRATION"],
+        "applicable_to": "no_nominee_large_estate"
+      }
+    ],
+    "complexity_rules": [
+      {
+        "condition": "has_property AND no_will AND multiple_heirs",
+        "adds_complexity": "HIGH",
+        "reason": "Property transfer requires Legal Heir Certificate and possible court involvement"
+      },
+      {
+        "condition": "no_nominee AND bank_accounts > 0",
+        "adds_complexity": "HIGH",
+        "reason": "Bank accounts without nominees require Succession Certificate (court process)"
+      },
+      {
+        "condition": "insurance_policy_age_months < 36",
+        "adds_complexity": "MEDIUM",
+        "reason": "Early claim — insurer will conduct detailed investigation (60-90 days)"
+      },
+      {
+        "condition": "state IN ['Maharashtra', 'Tamil Nadu', 'West Bengal'] AND has_property",
+        "adds_complexity": "HIGH",
+        "reason": "Probate mandatory for property in these states"
+      }
+    ]
+  }
+}
