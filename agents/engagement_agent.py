@@ -273,6 +273,16 @@ class EngagementAgent:
         days = case.get("days_since_death", 0)
         name = case.get("deceased_name", "your loved one")
 
+        # Build the task list string
+        task_list_str = ""
+        tasks = case.get("tasks", [])
+        if tasks:
+            task_list_str = "\n\n**Pending Tasks (in order of priority):**\n"
+            for i, t in enumerate(tasks):
+                urgency_icon = "🔴 " if t.get("urgency") == "CRITICAL" else "🟡 " if t.get("urgency") == "HIGH" else "🔵 "
+                task_list_str += f"{i+1}. {urgency_icon}**{t.get('name')}**\n"
+            task_list_str += "\n_(Type the exact name of any task above to get a step-by-step guide!)_"
+
         return {
             "agent": "Engagement & Grief Support Agent",
             "iq_layer": "Work IQ (simulated)",
@@ -291,7 +301,7 @@ class EngagementAgent:
                 f"• Tasks marked CRITICAL: {urgent}\n"
                 f"• Days since passing: {days}\n"
                 f"• Estimated time to complete all tasks: "
-                f"{case.get('estimated_completion_days', 90)} days\n\n"
-                "You can ask about any specific task and Saatvika will guide you through it."
+                f"{case.get('estimated_completion_days', 90)} days"
+                f"{task_list_str}"
             ),
         }

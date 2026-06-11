@@ -212,6 +212,31 @@ class Orchestrator:
             )
             return result
 
+        # Check if user wants to mark a task as complete
+        if "complete" in msg_lower or "done" in msg_lower or "finished" in msg_lower:
+            if self.case_profile and "tasks" in self.case_profile:
+                for task in list(self.case_profile["tasks"]):
+                    task_name = task.get("name", "").lower()
+                    if len(msg_lower) > 5 and (msg_lower in task_name or task_name in msg_lower or task.get("task_id", "").lower() in msg_lower):
+                        self.case_profile["tasks"].remove(task)
+                        self.case_profile["total_tasks"] = len(self.case_profile["tasks"])
+                        if task.get("urgency") == "CRITICAL":
+                            self.case_profile["urgent_tasks"] -= 1
+                        return {
+                            "agent": "Engagement & Grief Support Agent",
+                            "iq_layer": "Work IQ — State Tracking",
+                            "state": "ACTIVE",
+                            "message": f"✅ **Fantastic job.**\n\nI have officially marked **{task.get('name')}** as complete and updated your estate plan.\n\nTake a moment to breathe. Every step forward is a victory. You now have **{self.case_profile['total_tasks']} tasks remaining**.",
+                        }
+
+        # Check if user selected a specific task from the list for a step-by-step guide
+        if self.case_profile and "tasks" in self.case_profile:
+            for task in self.case_profile["tasks"]:
+                task_name = task.get("name", "").lower()
+                # If they typed the exact task name, or a substantial part of it
+                if len(msg_lower) > 5 and (msg_lower in task_name or task_name in msg_lower):
+                    return self._generate_task_guide(task)
+
         # Route to best matching agent
         scores = {"legal": legal_score, "financial": financial_score, "engagement": engagement_score}
         best_agent = max(scores, key=scores.get)
@@ -233,6 +258,105 @@ class Orchestrator:
                 "reminder", case_profile=self.case_profile,
                 task=self._get_next_pending_task()
             )
+
+    def _generate_task_guide(self, task: dict) -> dict:
+        """Generate a pin-to-pin step-by-step guide for a specific task using a switch case."""
+        task_id = task.get("task_id", "")
+        task_name = task.get("name", "")
+        
+        # Switch case for task IDs
+        steps = []
+        if task_id == "T-001":
+            steps = [
+                "1. Obtain the Medical Certificate of Cause of Death (MCCD) from the hospital or attending doctor.",
+                "2. Visit the local Municipal Corporation or Gram Panchayat office within 21 days.",
+                "3. Fill out Form 2 (Death Report form) and submit it along with the deceased's ID and your ID.",
+                "4. Pay the nominal registration fee and collect the acknowledgment slip.",
+                "5. Return after 7 days to collect the certificate. Always request at least 10 certified copies."
+            ]
+        elif task_id == "T-002":
+            steps = [
+                "1. Gather all bank passbooks, cheque books, and debit cards of the deceased.",
+                "2. Visit the home branch of each bank in person with the original Death Certificate.",
+                "3. Submit a written application to freeze the account to prevent fraud.",
+                "4. If you are the nominee, fill out the bank's claim form to transfer the funds.",
+                "5. Submit your KYC documents (Aadhaar/PAN) and a cancelled cheque for the transfer."
+            ]
+        elif task_id == "T-003":
+            steps = [
+                "1. Locate the original policy document and note the policy number.",
+                "2. Contact the insurance agent or visit the branch office.",
+                "3. Fill out the Death Claim Form (e.g., Form 3784 for LIC).",
+                "4. Submit the form along with the original policy, Death Certificate, and nominee's KYC.",
+                "5. If the policy is less than 3 years old, be prepared for a mandatory 60-90 day investigation."
+            ]
+        elif task_id == "T-004":
+            steps = [
+                "1. Log in to the EPFO Unified Portal using the deceased's UAN (if active).",
+                "2. If offline, obtain Form 20 (for EPF), Form 10-D (for pension), and Form 5-IF (for EDLI insurance).",
+                "3. Fill out the forms and have them attested by the last employer.",
+                "4. Attach the Death Certificate, cancelled cheque, and nominee's Aadhaar.",
+                "5. Submit the physical forms to the regional EPFO office."
+            ]
+        elif task_id == "T-005":
+            steps = [
+                "1. Notify the pension disbursing bank immediately to stop the deceased's pension.",
+                "2. If overpayment occurred after death, it will be automatically recovered by the bank.",
+                "3. Obtain Form 14 (Application for Family Pension).",
+                "4. Submit Form 14 with the Death Certificate and joint photographs to the pension sanctioning authority.",
+                "5. Open a separate bank account for the family pension if you don't already have one."
+            ]
+        elif task_id == "T-006":
+            steps = [
+                "1. Obtain the Death Certificate and ID proofs for all legal heirs.",
+                "2. Draft an affidavit listing all legal heirs and have it notarized.",
+                "3. Apply at the local Tehsildar or Revenue Office (can be done online via e-Seva in some states).",
+                "4. The Village Administrative Officer (VAO) will conduct a physical inquiry.",
+                "5. The certificate will be issued after 15-30 days."
+            ]
+        elif task_id == "T-007":
+            steps = [
+                "1. Obtain the Legal Heir Certificate and the original property documents.",
+                "2. Draft a mutation application (Dakhil Kharij) to transfer the title.",
+                "3. Submit the application to the local Revenue Inspector or Municipal office.",
+                "4. A 30-day notice period will be published to invite any objections.",
+                "5. Once approved, the property records will be updated in your name."
+            ]
+        elif task_id == "T-008":
+            steps = [
+                "1. Hire a property lawyer to draft the Probate Petition.",
+                "2. File the petition in the District Court or High Court.",
+                "3. The court will issue notices to all legal heirs and publish a public notice in newspapers.",
+                "4. Pay the required court fees (usually a percentage of the property value).",
+                "5. If there are no objections after the notice period, the court will grant Probate."
+            ]
+        elif task_id == "T-009":
+            steps = [
+                "1. Notify the lending bank immediately about the death.",
+                "2. Check if the deceased had Home Loan Protection Plan (HLPP) insurance.",
+                "3. If HLPP exists, file a claim with the insurer to settle the outstanding loan balance.",
+                "4. If no insurance exists, the legal heirs are responsible for continuing the EMIs.",
+                "5. Submit the Legal Heir Certificate to have the loan transferred to your name."
+            ]
+        else:
+            steps = [
+                "1. Gather all relevant documents related to this task.",
+                "2. Review the cited Foundry IQ source for specific instructions.",
+                "3. If you need professional help, consult a legal or financial expert."
+            ]
+            
+        steps_html = "<br><br>".join(steps)
+            
+        return {
+            "agent": task.get("agent", "Orchestrator"),
+            "iq_layer": "Work IQ — Step-by-Step Guide",
+            "state": "ACTIVE",
+            "message": f"**Step-by-Step Guide: {task_name}**\n\nHere is exactly how to do this:\n\n{steps_html}",
+            "citation": {
+                "source_document": task.get("iq_source", "").replace("Foundry IQ — ", "").replace(".md", ""),
+                "disclaimer": "SYNTHETIC GUIDE — For demonstration only. Not real advice."
+            }
+        }
 
     def _handle_follow_up(self, msg_lower: str, original_msg: str) -> dict:
         """Handle follow-up state — proactive check-ins."""

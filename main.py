@@ -122,7 +122,7 @@ async def submit_intake(data: IntakeFormData):
     orch = get_or_create_session(data.session_id)
     intake_dict = data.model_dump(exclude={"session_id"})
     response = orch.process_message(
-        message="Submitting intake form",
+        user_message="Submitting intake form",
         intake_data=intake_dict
     )
     return response
@@ -139,7 +139,7 @@ async def chat(request: ChatRequest):
 
     orch = get_or_create_session(request.session_id)
     response = orch.process_message(
-        message=request.message,
+        user_message=request.message,
         intake_data=request.intake_data,
     )
     return response

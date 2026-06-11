@@ -62,7 +62,7 @@ document.getElementById("intake-form").addEventListener("submit", async (e) => {
   try {
     const res = await fetch(`${API_BASE}/api/intake`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "bypass-tunnel-reminder": "true" },
       body: JSON.stringify(payload),
     });
     const data = await res.json();
@@ -119,7 +119,7 @@ async function sendMessage() {
   try {
     const res = await fetch(`${API_BASE}/api/chat`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "bypass-tunnel-reminder": "true" },
       body: JSON.stringify({ session_id: SESSION_ID, message: msg }),
     });
     const data = await res.json();
@@ -245,7 +245,9 @@ async function showTasks() {
     return;
   }
   try {
-    const res = await fetch(`${API_BASE}/api/tasks/${SESSION_ID}`);
+    const res = await fetch(`${API_BASE}/api/tasks/${SESSION_ID}`, {
+      headers: { "bypass-tunnel-reminder": "true" }
+    });
     const data = await res.json();
     if (data.tasks) loadTasksIntoModal(data.tasks);
   } catch {
@@ -280,7 +282,10 @@ async function requestSupport() {
   addUserMessage("Show me grief support resources");
   setLoading(true);
   try {
-    const res = await fetch(`${API_BASE}/api/support/${SESSION_ID}`, { method: "POST" });
+    const res = await fetch(`${API_BASE}/api/support/${SESSION_ID}`, { 
+      method: "POST",
+      headers: { "bypass-tunnel-reminder": "true" }
+    });
     const data = await res.json();
 
     const msg = data.message + "\n\n" +

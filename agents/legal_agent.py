@@ -149,6 +149,10 @@ class LegalAgent:
                 best_score = score
                 best_section = section
 
+        if best_score == 0:
+            result = content[:600] + "\n\n_[See full document for complete details]_"
+            return result
+
         # Return heading + content, max 600 chars to keep response concise
         result = "## " + best_section.strip()
         if len(result) > 700:
