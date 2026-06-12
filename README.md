@@ -2,6 +2,8 @@
 
 **Saatvika** is an empathetic, multi-agent AI orchestrator designed to guide bereaved families through the overwhelming legal and financial bureaucracy following the loss of a loved one. By combining compassionate engagement with hard, cited legal facts, Saatvika turns an impossible burden into a manageable, step-by-step journey.
 
+🎥 **[Watch the Demo Video on Loom](https://www.loom.com/share/e674605eb7e0473ab820ea5893c1bb2d)**
+
 ## 🚀 Key Features
 
 * **Multi-Agent Orchestrator:** Seamlessly routes user queries between specialized Legal, Financial, and Grief Support AI agents without breaking the conversation flow.
