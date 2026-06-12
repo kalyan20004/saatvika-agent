@@ -47,4 +47,4 @@
 * **Password:** saatvik123
 
 ---
-*Built with ❤️ for the Microsoft AI Hackathon.*
+
