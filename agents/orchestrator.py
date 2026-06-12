@@ -347,11 +347,13 @@ class Orchestrator:
             
         steps_html = "<br><br>".join(steps)
             
+        task["status"] = "ONGOING"
+        
         return {
             "agent": task.get("agent", "Orchestrator"),
             "iq_layer": "Work IQ — Step-by-Step Guide",
             "state": "ACTIVE",
-            "message": f"**Step-by-Step Guide: {task_name}**\n\nHere is exactly how to do this:\n\n{steps_html}",
+            "message": f"**Step-by-Step Guide: {task_name}**\n\n*(I have marked this task as **ONGOING** in your progress tracker)*\n\nHere is exactly how to do this:\n\n{steps_html}",
             "citation": {
                 "source_document": task.get("iq_source", "").replace("Foundry IQ — ", "").replace(".md", ""),
                 "disclaimer": "SYNTHETIC GUIDE — For demonstration only. Not real advice."
@@ -390,6 +392,7 @@ class Orchestrator:
         """Wrap all responses with metadata."""
         return {
             **response,
+            "case_profile": self.case_profile,
             "session": {
                 "state": self.state,
                 "case_id": self.case_profile.get("case_id") if self.case_profile else None,

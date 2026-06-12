@@ -11,8 +11,49 @@
 </head>
 <body>
 
+<!-- ═══════════════ AUTH (MOCK) ═══════════════ -->
+<section id="auth" class="screen active">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="logo-mark" style="font-size: 3rem;">🪔</div>
+      <h2>Welcome to Saatvika</h2>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">Please sign in to access your secure estate plan.</p>
+      
+      <div class="form-group" style="text-align: left;">
+        <label>Email Address / Username</label>
+        <input type="text" id="auth-email" placeholder="Enter your email or username" />
+      </div>
+      <div class="form-group" style="text-align: left;">
+        <label>Password</label>
+        <input type="password" id="auth-password" placeholder="Enter your password" />
+      </div>
+      
+      <button class="btn-primary" style="width: 100%; margin-top: 1rem;" type="button" onclick="
+        var e = document.getElementById('auth-email').value.trim();
+        var p = document.getElementById('auth-password').value.trim();
+        if (e === 'admin' && p === 'saatvik123') { showScreen('landing'); }
+        else { alert('Demo credentials are: admin / saatvik123'); }
+      ">
+        Log In
+      </button>
+      
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem; text-align: center;">
+        Demo Credentials: <strong>admin</strong> / <strong>saatvik123</strong>
+      </p>
+      
+      <div style="margin: 1.5rem 0; display: flex; align-items: center; color: var(--text-muted);">
+        <hr style="flex-grow: 1; border-color: var(--border);"><span style="padding: 0 1rem; font-size: 0.8rem;">OR</span><hr style="flex-grow: 1; border-color: var(--border);">
+      </div>
+      
+      <button class="btn-secondary" style="width: 100%;" onclick="showScreen('landing')">
+        Register New Account
+      </button>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════ HERO / LANDING ═══════════════ -->
-<section id="landing" class="screen active">
+<section id="landing" class="screen">
   <div class="hero-bg"></div>
   <div class="hero-content">
     <div class="logo-mark">🪔</div>
@@ -298,6 +339,6 @@
   </div>
 </div>
 
-<script src="/static/app.js"></script>
+<script src="/static/app.js?v=2"></script>
 </body>
 </html>

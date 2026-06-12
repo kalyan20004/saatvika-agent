@@ -25,6 +25,18 @@ function setLoading(on) {
 function openModal(id) { document.getElementById(id).classList.remove("hidden"); }
 function closeModal(id) { document.getElementById(id).classList.add("hidden"); }
 
+// ─── Authentication ──────────────────
+function handleLogin() {
+  const email = document.getElementById("auth-email").value.trim();
+  const pass = document.getElementById("auth-password").value.trim();
+  
+  if (email === "admin" && pass === "saatvik123") {
+    showScreen("landing");
+  } else {
+    alert("Invalid credentials.\n\nFor this demo, please use:\nUsername: admin\nPassword: saatvik123");
+  }
+}
+
 // ─── Intake Form Submit ──────────────
 document.getElementById("intake-form").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -330,7 +342,7 @@ function formatMarkdown(text) {
 
 // ─── Init ─────────────────────────────
 window.addEventListener("DOMContentLoaded", () => {
-  showScreen("landing");
+  showScreen("auth");
   console.log(
     "%c🪔 SAATVIKA — AI Agent for Grief & Estate Navigation\n" +
     "%cMicrosoft Agents League Hackathon 2026\n" +

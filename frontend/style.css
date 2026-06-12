@@ -183,6 +183,46 @@ body {
   color: var(--text-muted);
 }
 
+/* ═══════════════ AUTH SCREEN (MOCK) ═══════════════ */
+#auth {
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, rgba(232,134,42,0.15) 0%, var(--deep-navy) 70%);
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  padding: 2rem;
+  z-index: 10;
+}
+
+.auth-card {
+  background: var(--navy);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: var(--radius-xl);
+  padding: 3.5rem 3rem;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(232,134,42,0.15), var(--shadow-lg);
+}
+
+.auth-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  margin: 1rem 0 0.5rem;
+  color: var(--saffron);
+}
+
+.auth-card .form-group {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.auth-card input {
+  width: 100%;
+}
+
 /* ═══════════════ INTAKE FORM ═══════════════ */
 #intake {
   flex-direction: column;
@@ -240,6 +280,8 @@ body {
 .form-group label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
 
 input[type="text"],
+input[type="email"],
+input[type="password"],
 input[type="date"],
 input[type="number"],
 select,
